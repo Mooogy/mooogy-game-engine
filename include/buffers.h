@@ -4,7 +4,7 @@ struct VBO
 {
     unsigned int ID;
 
-    VBO(float* vertices, GLsizeiptr size);
+    VBO(float* vertices, unsigned int size);
     void Bind();
     void Unbind();
     void Clear();
@@ -14,7 +14,7 @@ struct EBO
 {
     unsigned int ID;
 
-    EBO(unsigned int* indices, GLsizeiptr size);
+    EBO(unsigned int* indices, unsigned int size);
     void Bind();
     void Unbind();
     void Clear();
@@ -25,7 +25,7 @@ struct VAO
     unsigned int ID;
 
     VAO();
-    void LinkVBO(VBO& VBO, unsigned int layout);
+    void LinkVBO(VBO& VBO, unsigned int layout, GLsizei stride, void* offset); // stride = length between start of one vertex info and the start of next | offset = starting pos
     void Bind();
     void Unbind();
     void Clear();

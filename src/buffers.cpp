@@ -2,11 +2,14 @@
 
 // VBO FUNCTIONALITY
 
-VBO::VBO(float* vertices, GLsizeiptr size)
+VBO::VBO(float* vertices, unsigned int size)
 {
     glGenBuffers(1, &ID);
     glBindBuffer(GL_ARRAY_BUFFER, ID);
-    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+
+    // Determine buffer data parameter size
+
+    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), vertices, GL_STATIC_DRAW);
 }
 void VBO::Bind()
 {
@@ -25,11 +28,11 @@ void VBO::Clear()
 
 // EBO FUNCTIONALITY
 
-EBO::EBO(unsigned int* indices, GLsizeiptr size)
+EBO::EBO(unsigned int* indices, unsigned int size)
 {
     glGenBuffers(1, &ID);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 }
 void EBO::Bind()
 {
@@ -51,10 +54,10 @@ VAO::VAO()
 {
     glGenVertexArrays(1, &ID);
 }
-void VAO::LinkVBO(VBO& VBO, unsigned int layout)
+void VAO::LinkVBO(VBO& VBO, unsigned int layout, GLsizei stride, void* offset)
 {
     VBO.Bind();
-    glVertexAttribPointer(layout, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glVertexAttribPointer(layout, 3, GL_FLOAT, GL_FALSE, stride, offset);
     glEnableVertexAttribArray(layout);
     VBO.Unbind();
 }
